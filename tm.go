@@ -34,8 +34,10 @@ type TuringMachine struct {
 
 // Add blank symbol to the beginning and end of the tape.
 func encloseBlankSymbol(tape []Symbol) []Symbol {
-    tape, tape[0] = append(tape[:1], tape[0:]...), 'B'
-    return append(tape, 'B')
+    enclosed := make([]Symbol, len(tape) + 2)
+    enclosed[0], enclosed[len(tape)+1] = 'B', 'B'
+    copy(enclosed[1:], tape)
+    return enclosed
 }
 
 func New(tape []Symbol, rule []rule) *TuringMachine {
